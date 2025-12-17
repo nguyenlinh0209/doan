@@ -6,9 +6,13 @@ sealed class Screen(val route: String) {
     object Camera : Screen("camera")
     object Target : Screen("target")
     object Profile : Screen("profile")
+
+    object Intro : Screen("intro")
+
     object QuizDetail : Screen("quiz/{quizId}") {
         fun createRoute(quizId: String) = "quiz/$quizId"
     }
+
 
     companion object {
         fun fromRoute(route: String?): Screen? =
@@ -18,6 +22,7 @@ sealed class Screen(val route: String) {
                 Camera.route -> Camera
                 Target.route -> Target
                 Profile.route -> Profile
+                Intro.route -> Intro
                 else -> null
             }
     }

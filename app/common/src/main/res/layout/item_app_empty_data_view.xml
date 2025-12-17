@@ -37,7 +37,7 @@
                 android:id="@+id/tvStart"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_40"
-                android:background="@drawable/bg_button"
+                android:background="@drawable/bg_green_corner_9"
                 android:clickable="true"
                 android:clipToOutline="true"
                 android:focusable="true"

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
     <application android:theme="@style/Theme.Main">
-        <activity android:name=".ui.intro.IntroActivity"/>
         <activity
-            android:name=".ui.splash.SplashActivity"
-            android:exported="true">
+            android:name=".ui.intro.IntroComposeActivity"
+            android:theme="@style/Theme.Main" />
+
+        <activity
+            android:name=".ui.splash.SplashComposeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.intro.IntroActivity" />
+        <activity android:name=".ui.splash.SplashActivity" />
     </application>
 </manifest>

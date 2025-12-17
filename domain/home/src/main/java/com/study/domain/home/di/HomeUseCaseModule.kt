@@ -2,9 +2,11 @@ package com.study.domain.home.di
 
 import com.study.domain.home.repository.CategoryFlashcardRepository
 import com.study.domain.home.repository.FlashCardRepository
+import com.study.domain.home.repository.QuizzRepository
 import com.study.domain.home.repository.TaskItemRepository
 import com.study.domain.home.usecase.DeleteTaskUseCase
 import com.study.domain.home.usecase.GenerateFlashCardUseCase
+import com.study.domain.home.usecase.GenerateQuizUseCase
 import com.study.domain.home.usecase.GetAllCategoryFlashCard
 import com.study.domain.home.usecase.GetFlashCardByCategoryIDUseCase
 import com.study.domain.home.usecase.GetTasksByUserIdUseCase
@@ -115,5 +117,14 @@ object HomeUseCaseModule {
         flashCardRepository: FlashCardRepository,
     ): GenerateFlashCardUseCase {
         return GenerateFlashCardUseCase(flashCardRepository)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideGenerateQuizUseCase(
+        quizzRepository: QuizzRepository,
+    ): GenerateQuizUseCase {
+        return GenerateQuizUseCase(quizzRepository)
     }
 }

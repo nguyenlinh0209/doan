@@ -73,6 +73,7 @@ class IntroActivity :
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     IntroUiEvent.NavigateToMain -> showHome()
+                    is IntroUiEvent.NavigateEducation -> TODO()
                 }
             }
         }

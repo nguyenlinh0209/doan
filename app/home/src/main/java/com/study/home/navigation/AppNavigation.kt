@@ -11,9 +11,11 @@ import com.study.calendar.ui.CalendarScreenContainer
 import com.study.camera.ui.CameraScreenContainer
 import com.study.common.navigation.AuthNavigator
 import com.study.home.ui.home.HomeScreenContainer
+import com.study.home.ui.home.aichat.AIChatScreenContainer
 import com.study.home.ui.home.flashcard.ScreenFlashCardContainer
 import com.study.home.ui.home.flashcard.managementflashcard.FlashCardContainer
 import com.study.home.ui.home.profile.ProfileScreenContainer
+import com.study.home.ui.home.quizz.QuizzContainer
 import java.util.UUID
 
 @Composable
@@ -27,11 +29,9 @@ fun AppNavigation(
         startDestination = Screen.Home.route,
         modifier = modifier
     ) {
-
         composable(Screen.Home.route) {
             HomeScreenContainer(navController)
         }
-
         composable(Screen.Calendar.route) {
             CalendarScreenContainer(navController)
         }
@@ -43,7 +43,6 @@ fun AppNavigation(
         composable(Screen.CategoryFlashCard.route) {
             ScreenFlashCardContainer(navController)
         }
-
         composable(
             route = Screen.FlashCard.route,
             arguments = listOf(
@@ -70,6 +69,12 @@ fun AppNavigation(
 
         composable(Screen.Profile.route) {
             ProfileScreenContainer(navController, authNavigator)
+        }
+        composable(Screen.QuizShow.route) {
+            QuizzContainer(navController)
+        }
+        composable(Screen.AICHAT.route) {
+            AIChatScreenContainer(navController)
         }
     }
 }

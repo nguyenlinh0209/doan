@@ -18,9 +18,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
+import com.study.home.ui.home.HomeUiAction
+import com.study.home.ui.home.HomeUiState
 
 @Composable
-fun AIChatScreen() {
+fun AIChatScreen(
+    state: AIChatUiState,
+    onAction: (AIChatUiAction) -> Unit
+) {
     var messageText by remember { mutableStateOf("") }
 
     Box(
@@ -54,12 +60,11 @@ fun AIChatScreen() {
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Icon(
-                    imageVector = Icons.Default.Image,
+                    painter = painterResource(id = com.study.home.R.drawable.ic_ai),
                     contentDescription = "AI Logo",
                     tint = Color(0xFF4A90E2),
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(60.dp)
                 )
-
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
@@ -131,7 +136,6 @@ fun AIChatScreen() {
                         )
                     }
 
-                    // Text input field
                     TextField(
                         value = messageText,
                         onValueChange = { messageText = it },
@@ -183,9 +187,3 @@ fun AIChatScreen() {
     }
 }
 
-
-@Preview(showBackground = true, widthDp = 360, heightDp = 640)
-@Composable
-fun PreviewAIChatScreen() {
-    AIChatScreen()
-}

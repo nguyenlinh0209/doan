@@ -6,24 +6,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.study.home.ui.home.flashcard.managementflashcard.FlashCardScreen
-import com.study.home.ui.home.flashcard.managementflashcard.FlashCardUiAction
 import com.study.home.ui.home.flashcard.managementflashcard.FlashCardUiEvent
-import com.study.home.ui.home.flashcard.managementflashcard.FlashCardViewModel
-import java.util.UUID
 
 
 @Composable
 fun QuizzContainer(
-    navController: NavHostController,
-    categoryId: UUID
-) {
-    val viewModel: FlashCardViewModel = hiltViewModel()
+    navController: NavHostController, ) {
+    val viewModel: QuizzViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.dispatch(FlashCardUiAction.LoadFlashCardsForCategory(categoryId))
-    }
 
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { event ->
@@ -33,7 +23,7 @@ fun QuizzContainer(
         }
     }
 
-    FlashCardScreen(
+    QuizzScreen(
         uiState = state,
         onAction = viewModel::dispatch
     )

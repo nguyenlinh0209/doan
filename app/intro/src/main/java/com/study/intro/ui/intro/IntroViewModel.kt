@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.osprey.data.common.datasource.AppSharePrefs
+import com.study.common.navigation.Screen
 import com.study.intro.model.IntroData
 import com.study.core.base.viewmodel.BaseUiStateViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IntroViewModel @Inject constructor(
-     val app: Application,
+    val app: Application,
     val appSharePrefs: AppSharePrefs
 ) : BaseUiStateViewModel<IntroUiState, IntroUiEvent, IntroUiAction>(app) {
 
@@ -31,6 +32,7 @@ class IntroViewModel @Inject constructor(
         when (action) {
             is IntroUiAction.OnFinishIntro -> onFinishIntro()
             is IntroUiAction.OnPageChanged -> onPageChanged(action.position)
+            IntroUiAction.NavigateIntro -> navigatetoIntro()
         }
     }
 
@@ -49,4 +51,9 @@ class IntroViewModel @Inject constructor(
         }
     }
 
+    private fun navigatetoIntro() {
+        viewModelScope.launch(Dispatchers.Main) {
+            sendEvent(IntroUiEvent.NavigateEducation((Screen.Intro)))
+        }
+    }
 }

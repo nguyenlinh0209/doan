@@ -13,12 +13,18 @@ sealed class Screen(val route: String) {
 
     object AddFlashCard : Screen("add_flashcard")
 
+    object Splash : Screen("splash")
+
+
     object Slash : Screen("slash")
 
     object QuizDetail : Screen("quiz/{quizId}") {
         fun createRoute(quizId: String) = "quiz/$quizId"
     }
 
+    object QuizShow : Screen("quizshow")
+
+    object AICHAT : Screen("aichat")
     object FlashCard : Screen("flashcard/{categoryId}") {
         fun createRoute(categoryId: UUID) = "flashcard/$categoryId"
     }
@@ -33,6 +39,8 @@ sealed class Screen(val route: String) {
                 route?.startsWith("flashcard/") == true -> FlashCard
                 route == CategoryFlashCard.route -> CategoryFlashCard
                 route == AddFlashCard.route -> AddFlashCard
+                route == QuizShow.route -> QuizShow
+                route == AICHAT.route -> AICHAT
                 else -> null
             }
     }

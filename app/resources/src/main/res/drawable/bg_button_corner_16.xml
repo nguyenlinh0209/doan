@@ -19,7 +19,7 @@
     </item>
 
     <item
-        android:drawable="@drawable/ic_bong"
+        android:drawable="@drawable/ic_hex_center"
         android:gravity="start|top"
         android:start="4dp"
         android:top="4dp" />

@@ -20,8 +20,8 @@ import com.study.intro.ui.intro.IntroUiState
 
 @Composable
 fun SlashScreen(
-    uiState: IntroUiState,
-    onAction: (IntroUiAction) -> Unit = {}
+    uiState: SplashUiState,
+    onAction: (SplashUiAction) -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -89,7 +89,7 @@ fun SlashScreen(
         }
 
         Button(
-            onClick = { },
+            onClick = { onAction(SplashUiAction.CheckFirstOpen) },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF1BC77D)
             ),
@@ -108,14 +108,4 @@ fun SlashScreen(
             )
         }
     }
-}
-
-@Preview(showBackground = true, widthDp = 360, heightDp = 640)
-@Composable
-fun PreviewFlashCardOnboardingScreen() {
-    val initial = IntroUiState()
-    SlashScreen(
-        initial,
-        {}
-    )
 }

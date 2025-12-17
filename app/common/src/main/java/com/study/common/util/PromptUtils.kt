@@ -15,7 +15,6 @@ object PromptUtils {
         }
 
         return if (isWorkRelated) {
-            // 🔒 Giữ nguyên logic cũ của bạn
             """
 You are a professional AI task management assistant.
 Analyze and summarize the following task or work-related information in a clear, detailed paragraph format:
@@ -64,5 +63,53 @@ Important:
 - Do not add extra text before or after
             """.trimIndent()
         }
+    }
+
+    fun getQuizPrompt(input: String, count: Int): String {
+        return """
+You are an AI that creates multiple-choice quiz questions.
+
+Topic:
+$input
+
+Create exactly $count quiz questions.
+
+Rules:
+- Each question MUST have:
+  - QUESTION
+  - OPTION A
+  - OPTION B
+  - OPTION C
+  - OPTION D
+  - ANSWER (only A, B, C, or D)
+  - EXPLAIN (short explanation why the answer is correct)
+
+- Output format MUST be EXACTLY like this:
+
+QUESTION 1:
+CONTENT: ...
+A: ...
+B: ...
+C: ...
+D: ...
+ANSWER: A
+EXPLAIN: ...
+
+QUESTION 2:
+CONTENT: ...
+A: ...
+B: ...
+C: ...
+D: ...
+ANSWER: C
+EXPLAIN: ...
+
+(continue until QUESTION $count)
+
+Important:
+- Do NOT add any extra text
+- Do NOT change labels
+- Keep explanations concise
+        """.trimIndent()
     }
 }

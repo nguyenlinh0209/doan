@@ -1,4 +1,4 @@
-package com.study.intro.ui.splash
+package com.study.home.ui.home.aichat
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -6,25 +6,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.study.intro.ui.intro.IntroUiEvent
+
 
 @Composable
-fun SlashScreenContainer(navController: NavHostController) {
-    val viewModel: SlashViewModel = hiltViewModel()
+fun AIChatScreenContainer(navController: NavHostController) {
+    val viewModel: AIChatViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-
-                SplashUiEvent.NavigateToIntro -> TODO()
-                SplashUiEvent.NavigateToMain -> TODO()
+                is AIChatUiEvent.MessageSent -> TODO()
             }
         }
     }
 
-    SlashScreen(
-        uiState = state,
+    AIChatScreen(
+        state = state,
         onAction = viewModel::dispatch
     )
 }

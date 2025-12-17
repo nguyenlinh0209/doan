@@ -24,13 +24,24 @@ class HomeViewModel @Inject constructor(
         when (action) {
             HomeUiAction.LoadData -> loadData()
             HomeUiAction.Retry -> loadData()
-            is HomeUiAction.FeatureClicked -> navigateFlashCard()
-            }
+            is HomeUiAction.FeatureClicked -> navigate(action.feature)
         }
+    }
 
-    private fun navigateFlashCard(){
+    private fun navigate(feature: String) {
         viewModelScope.launch(Dispatchers.Main) {
-            sendEvent(HomeUiEvent.NavigateTo(Screen.FlashCard))
+            when (feature) {
+                "Flash Card" -> {
+                    sendEvent(HomeUiEvent.NavigateTo(Screen.FlashCard))
+                }
+
+                "Tạo Quiz" -> {
+                    sendEvent(HomeUiEvent.NavigateTo(Screen.QuizShow))
+                }
+                "AIChat" -> {
+                    sendEvent(HomeUiEvent.NavigateTo(Screen.AICHAT))
+                }
+            }
         }
     }
 

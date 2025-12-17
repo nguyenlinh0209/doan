@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="17">
+      <module name="Osprey.app.auth" target="21" />
+      <module name="Osprey.app.common" target="21" />
+      <module name="Osprey.app.core" target="21" />
+      <module name="Osprey.app.home" target="21" />
+      <module name="Osprey.app.intro" target="21" />
+      <module name="Osprey.app.main" target="21" />
+      <module name="Osprey.app.resources" target="21" />
+      <module name="Osprey.config" target="21" />
+      <module name="Osprey.data.asset" target="21" />
+      <module name="Osprey.data.base" target="21" />
+      <module name="Osprey.data.chat" target="21" />
+      <module name="Osprey.data.common" target="21" />
+      <module name="Osprey.data.home" target="21" />
+      <module name="Osprey.data.main" target="21" />
+      <module name="Osprey.data.prefs" target="21" />
+      <module name="Osprey.data.remote" target="21" />
+      <module name="Osprey.data.user" target="21" />
+      <module name="Osprey.domain.asset" target="21" />
+      <module name="Osprey.domain.base" target="21" />
+      <module name="Osprey.domain.chat" target="21" />
+      <module name="Osprey.domain.common" target="21" />
+      <module name="Osprey.domain.home" target="21" />
+      <module name="Osprey.domain.main" target="21" />
+      <module name="Osprey.domain.remote" target="21" />
+      <module name="Osprey.domain.user" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "188164456144",
+    "project_id": "study-a451a",
+    "storage_bucket": "study-a451a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188164456144:android:0a5f7fa7f7cc6c5cb428d5",
+        "android_client_info": {
+
+          "package_name": "com.study.demo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFZoX-68td-BniPwDz-k6zAaJY-a2D6ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,26 @@ object PromptUtils {
         "assignment", "deadline", "due", "plan"
     )
 
+    fun homeworkPrompt(input: String): String {
+        return """
+You are an experienced AI tutor.
+
+The student asks the following question or homework:
+
+$input
+
+Instructions:
+- Clearly explain the solution step by step
+- Use simple and easy-to-understand language
+- If it is a math or logical problem, show all steps
+- If it is a theory question, explain concepts clearly
+- Give examples if helpful
+- Do NOT be overly verbose
+
+Answer in Vietnamese.
+        """.trimIndent()
+    }
+
     fun getPrompt(input: String, count: Int): String {
         val lowerInput = input.lowercase()
 

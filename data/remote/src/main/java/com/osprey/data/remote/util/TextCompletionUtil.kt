@@ -9,10 +9,10 @@ import com.wodox.data.remote.model.model.request.ChatMessageContentDto
 import com.wodox.data.remote.model.model.request.ChatMessageContentImageDto
 import com.wodox.data.remote.model.model.request.ChatMessageDto
 import com.osprey.data.remote.model.model.request.ChatRequestDto
-import com.wodox.data.remote.model.model.request.SenderDto
+import com.osprey.data.remote.model.model.request.SenderDto
 import com.starnest.domain.remote.model.TextCompletionInput
 import com.wodox.core.extension.toBase64
-import com.wodox.domain.remote.model.request.ChatMessage
+import com.osprey.domain.remote.model.request.ChatMessage
 import java.io.File
 
 object TextCompletionUtil {

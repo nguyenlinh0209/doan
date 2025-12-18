@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.osprey.data.common.datasource.AppSharePrefs
 import com.study.core.theme.AppTheme
 import com.study.common.navigation.MainNavigator
 import com.study.common.navigation.AuthNavigator
@@ -24,6 +25,9 @@ class IntroComposeActivity : ComponentActivity() {
 
     @Inject
     lateinit var authNavigator: AuthNavigator
+
+    @Inject
+    lateinit var appSharePrefs: AppSharePrefs
 
     private lateinit var viewModel: IntroViewModel
 
@@ -42,7 +46,8 @@ class IntroComposeActivity : ComponentActivity() {
                     },
                     onBack = {
                         finish()
-                    }
+                    },
+                    appSharePrefs
                 )
             }
         }
@@ -53,7 +58,8 @@ class IntroComposeActivity : ComponentActivity() {
 fun IntroNavigation(
     viewModel: IntroViewModel,
     onComplete: (String, String) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    appSharePrefs: AppSharePrefs
 ) {
     val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsState()
@@ -77,7 +83,8 @@ fun IntroNavigation(
         composable("education_flow") {
             EducationFlowScreen(
                 onNavigateBack = onBack,
-                onComplete = onComplete
+                onComplete = onComplete,
+                appSharePrefs = appSharePrefs
             )
         }
 

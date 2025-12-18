@@ -1,7 +1,6 @@
-package com.wodox.domain.remote.model.request
+package com.osprey.domain.remote.model.request
 
-import com.starnest.domain.common.model.Sender
-import com.starnest.domain.remote.model.request.ChatMessageContent
+import com.osprey.domain.common.model.Sender
 
 data class ChatMessage(
     var role: String = "",

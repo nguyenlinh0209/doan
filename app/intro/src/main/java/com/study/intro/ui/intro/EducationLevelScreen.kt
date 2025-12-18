@@ -16,9 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.osprey.data.common.datasource.AppSharePrefs
 
 @Composable
 fun EducationFlowScreen(
+    appSharePrefs: AppSharePrefs,
     onNavigateBack: () -> Unit,
     onComplete: (String, String) -> Unit
 ) {
@@ -35,9 +37,11 @@ fun EducationFlowScreen(
                 }
             )
         }
+
         EducationStep.GRADE -> {
             GradeSelectionScreen(
                 educationLevel = selectedLevel ?: "THCS",
+                appSharePrefs = appSharePrefs,
                 onNavigateBack = {
                     currentStep = EducationStep.LEVEL
                 },
@@ -153,6 +157,7 @@ fun EducationLevelScreen(
 @Composable
 fun GradeSelectionScreen(
     educationLevel: String,
+    appSharePrefs: AppSharePrefs,
     onNavigateBack: () -> Unit,
     onComplete: (String, String) -> Unit
 ) {
@@ -224,6 +229,9 @@ fun GradeSelectionScreen(
             Button(
                 onClick = {
                     selectedGrade?.let { grade ->
+                        val classNumber = grade.extractClassNumber()
+                        appSharePrefs.classStudy = classNumber
+
                         onComplete(educationLevel, grade)
                     }
                 },
@@ -294,5 +302,13 @@ fun EducationOption(
                 )
             }
         }
+    }
+}
+
+fun String.extractClassNumber(): Int {
+    return try {
+        this.replace("Lớp", "").trim().toInt()
+    } catch (e: Exception) {
+        0
     }
 }

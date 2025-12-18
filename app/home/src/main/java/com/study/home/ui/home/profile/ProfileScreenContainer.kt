@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.study.common.navigation.AuthNavigator
+import com.study.home.navigation.Screen
 
 @Composable
 fun ProfileScreenContainer(
@@ -20,12 +21,16 @@ fun ProfileScreenContainer(
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                ProfileScreenUiEvent.NavigateSignOut -> {
+                ProfileScreenUiEvent.NavigateEdit -> {
+                    navController.navigate(Screen.EDITPROFILE.route)
+                }
+                ProfileScreenUiEvent.NavigateSignOut ->
                     authNavigator.showSignIn(
                         context = context,
                         isShowSignUp = false
                     )
-                }
+
+                ProfileScreenUiEvent.NavigateChangePassword ->    navController.navigate(Screen.EditPassword.route)
             }
         }
     }

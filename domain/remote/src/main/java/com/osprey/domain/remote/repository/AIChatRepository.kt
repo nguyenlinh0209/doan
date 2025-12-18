@@ -2,7 +2,7 @@ package com.starnest.domain.remote.repository
 
 import android.content.Context
 import com.starnest.domain.remote.model.TextCompletionInput
-import com.wodox.domain.remote.model.request.ChatMessage
+import com.osprey.domain.remote.model.request.ChatMessage
 import com.starnest.domain.remote.model.request.TextCompletionRequest
 import com.starnest.domain.remote.model.response.TextCompletionResponse
 import kotlinx.coroutines.flow.Flow

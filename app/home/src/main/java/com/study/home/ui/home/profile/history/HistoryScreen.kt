@@ -46,7 +46,6 @@ fun HistoryScreen() {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Header with back button
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

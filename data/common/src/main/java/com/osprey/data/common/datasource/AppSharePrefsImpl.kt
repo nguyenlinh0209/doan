@@ -29,6 +29,9 @@ class AppSharePrefsImpl @Inject constructor(
         // Thêm keys cho authentication
         const val AUTH_TOKEN = "AUTH_TOKEN"
         const val USER_ID = "USER_ID"
+
+        const val STUDY_CLASS = "STUDY_CLASS"
+
     }
 
     override var currentCodeLang: String
@@ -116,4 +119,10 @@ class AppSharePrefsImpl @Inject constructor(
             .remove(Keys.USER_ID)
             .apply()
     }
+
+    override var classStudy: Int
+        get() = sharedPrefs.get(Keys.STUDY_CLASS)
+        set(value) {
+            sharedPrefs.set(Keys.STUDY_CLASS, value)
+        }
 }

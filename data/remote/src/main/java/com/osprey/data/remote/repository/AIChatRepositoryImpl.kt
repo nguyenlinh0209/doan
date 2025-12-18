@@ -10,10 +10,10 @@ import com.starnest.data.common.util.PromptUtil
 import com.osprey.data.remote.model.datasource.AIDataSource
 import com.osprey.data.remote.model.mapper.TextCompletionRequestMapper
 import com.wodox.data.remote.model.mapper.TextCompletionResponseMapper
-import com.wodox.data.remote.model.model.request.SenderDto
+import com.osprey.data.remote.model.model.request.SenderDto
 import com.osprey.data.remote.util.TextCompletionUtil
 import com.starnest.domain.remote.model.TextCompletionInput
-import com.wodox.domain.remote.model.request.ChatMessage
+import com.osprey.domain.remote.model.request.ChatMessage
 import com.starnest.domain.remote.model.request.TextCompletionMessage
 import com.starnest.domain.remote.model.request.TextCompletionRequest
 import com.starnest.domain.remote.model.response.ResponseFormat

@@ -1,4 +1,6 @@
-package com.starnest.domain.remote.model.request
+package com.osprey.domain.remote.model.request
+
+import com.starnest.domain.remote.model.request.ChatMessageContentImage
 
 
 data class ChatMessageContent(

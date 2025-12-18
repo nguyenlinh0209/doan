@@ -32,13 +32,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             when (feature) {
                 "Flash Card" -> {
-                    sendEvent(HomeUiEvent.NavigateTo(Screen.FlashCard))
+                    sendEvent(HomeUiEvent.NavigateTo(Screen.CategoryFlashCard))
                 }
 
                 "Tạo Quiz" -> {
                     sendEvent(HomeUiEvent.NavigateTo(Screen.QuizShow))
                 }
-                "AIChat" -> {
+                "Gia sư AI" -> {
                     sendEvent(HomeUiEvent.NavigateTo(Screen.AICHAT))
                 }
             }
@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             updateState {
                 it.copy(
                     streak = 5,

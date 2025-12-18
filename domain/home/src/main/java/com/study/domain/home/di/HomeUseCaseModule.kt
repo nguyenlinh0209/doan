@@ -1,9 +1,11 @@
 package com.study.domain.home.di
 
+import com.study.domain.home.repository.AIChatRepository
 import com.study.domain.home.repository.CategoryFlashcardRepository
 import com.study.domain.home.repository.FlashCardRepository
 import com.study.domain.home.repository.QuizzRepository
 import com.study.domain.home.repository.TaskItemRepository
+import com.study.domain.home.usecase.AsKAIResponseUseCase
 import com.study.domain.home.usecase.DeleteTaskUseCase
 import com.study.domain.home.usecase.GenerateFlashCardUseCase
 import com.study.domain.home.usecase.GenerateQuizUseCase
@@ -126,5 +128,13 @@ object HomeUseCaseModule {
         quizzRepository: QuizzRepository,
     ): GenerateQuizUseCase {
         return GenerateQuizUseCase(quizzRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAsKAIResponseUseCase(
+        quizzRepository: AIChatRepository,
+    ): AsKAIResponseUseCase {
+        return AsKAIResponseUseCase(quizzRepository)
     }
 }

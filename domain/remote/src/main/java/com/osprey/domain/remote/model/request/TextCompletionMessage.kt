@@ -1,6 +1,6 @@
 package com.starnest.domain.remote.model.request
 
-import com.starnest.domain.common.model.Sender
+import com.osprey.domain.common.model.Sender
 
 data class TextCompletionMessage(
     var role: String = "",

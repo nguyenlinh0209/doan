@@ -1,7 +1,7 @@
 package com.osprey.data.remote.model.datasource
 
 import com.google.gson.Gson
-import com.starnest.domain.common.model.Sender
+import com.osprey.domain.common.model.Sender
 import com.osprey.data.remote.extension.parseError
 import com.osprey.data.remote.model.api.ApiService
 import com.osprey.data.remote.model.model.request.ChatRequestDto

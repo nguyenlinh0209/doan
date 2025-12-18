@@ -12,9 +12,11 @@ import com.study.camera.ui.CameraScreenContainer
 import com.study.common.navigation.AuthNavigator
 import com.study.home.ui.home.HomeScreenContainer
 import com.study.home.ui.home.aichat.AIChatScreenContainer
+import com.study.home.ui.home.editpassword.EditPasswordScreenContainer
 import com.study.home.ui.home.flashcard.ScreenFlashCardContainer
 import com.study.home.ui.home.flashcard.managementflashcard.FlashCardContainer
 import com.study.home.ui.home.profile.ProfileScreenContainer
+import com.study.home.ui.home.profile.editprofile.EditProfileContainer
 import com.study.home.ui.home.quizz.QuizzContainer
 import java.util.UUID
 
@@ -75,6 +77,12 @@ fun AppNavigation(
         }
         composable(Screen.AICHAT.route) {
             AIChatScreenContainer(navController)
+        }
+        composable(Screen.EDITPROFILE.route) {
+            EditProfileContainer(navController)
+        }
+        composable(Screen.EditPassword.route) {
+            EditPasswordScreenContainer(navController)
         }
     }
 }

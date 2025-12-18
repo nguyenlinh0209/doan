@@ -1,9 +1,9 @@
-package com.wodox.data.remote.model.model.request
+package com.osprey.data.remote.model.model.request
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.starnest.domain.common.model.Sender
+import com.osprey.domain.common.model.Sender
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 

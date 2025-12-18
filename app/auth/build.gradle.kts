@@ -116,6 +116,7 @@ dependencies {
     implementation(project(":app:common"))
     implementation(project(":app:resources"))
     implementation(project(":domain:remote"))
+    implementation(project(":data:common"))
     implementation(project(":domain:user"))
     implementation(project(":domain:base"))
     implementation(project(":domain:main"))

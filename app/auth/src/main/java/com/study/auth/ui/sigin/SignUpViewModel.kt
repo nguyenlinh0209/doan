@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.osprey.data.common.datasource.AppSharePrefs
 import com.study.auth.model.Constants
 import com.study.domain.user.model.User
 import com.study.core.base.viewmodel.BaseUiStateViewModel
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     val app: Application,
     private val saveUserUseCase: SaveUserUseCase,
+    private val appSharePrefs: AppSharePrefs
 ) : BaseUiStateViewModel<SignUpUiState, SignUpUiEvent, SignUpUiAction>(app) {
 
     override fun initialState(): SignUpUiState = SignUpUiState()
@@ -41,20 +43,19 @@ class SignUpViewModel @Inject constructor(
             withContext(Dispatchers.Main) {
                 sendEvent(SignUpUiEvent.Loading(true))
             }
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     sendEvent(SignUpUiEvent.Loading(false))
                     if (task.isSuccessful) {
                         val firebaseUser = auth.currentUser
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(fullName)
-                            .build()
+                        val profileUpdates =
+                            UserProfileChangeRequest.Builder().setDisplayName(fullName).build()
                         firebaseUser?.updateProfile(profileUpdates)
 
                         val user = User(
                             id = UUID.nameUUIDFromBytes(firebaseUser!!.uid.toByteArray()),
                             email = email,
                             name = fullName,
+                            classStudy = appSharePrefs.classStudy,
                             password = password,
                             isActive = true,
                             updatedAt = Date()
@@ -80,8 +81,7 @@ class SignUpViewModel @Inject constructor(
     fun signIn(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             sendEvent(SignUpUiEvent.Loading(true))
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     sendEvent(SignUpUiEvent.Loading(false))
                     if (task.isSuccessful) {
                         sendEvent(SignUpUiEvent.Success("Sign-in successful"))

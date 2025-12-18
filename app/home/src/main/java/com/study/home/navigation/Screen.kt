@@ -11,8 +11,6 @@ sealed class Screen(val route: String) {
 
     object CategoryFlashCard : Screen("category_flashcard")
 
-    object AddFlashCard : Screen("add_flashcard")
-
     object Splash : Screen("splash")
 
 
@@ -25,23 +23,28 @@ sealed class Screen(val route: String) {
     object QuizShow : Screen("quizshow")
 
     object AICHAT : Screen("aichat")
+
+    object EDITPROFILE : Screen("editprofile")
+
+    object EditPassword : Screen("EditPassword")
+
     object FlashCard : Screen("flashcard/{categoryId}") {
         fun createRoute(categoryId: UUID) = "flashcard/$categoryId"
     }
 
     companion object {
-        fun fromRoute(route: String?): Screen? =
-            when {
-                route == Home.route -> Home
-                route == Calendar.route -> Calendar
-                route == Camera.route -> Camera
-                route == Profile.route -> Profile
-                route?.startsWith("flashcard/") == true -> FlashCard
-                route == CategoryFlashCard.route -> CategoryFlashCard
-                route == AddFlashCard.route -> AddFlashCard
-                route == QuizShow.route -> QuizShow
-                route == AICHAT.route -> AICHAT
-                else -> null
-            }
+        fun fromRoute(route: String?): Screen? = when {
+            route == Home.route -> Home
+            route == Calendar.route -> Calendar
+            route == Camera.route -> Camera
+            route == Profile.route -> Profile
+            route?.startsWith("flashcard/") == true -> FlashCard
+            route == CategoryFlashCard.route -> CategoryFlashCard
+            route == QuizShow.route -> QuizShow
+            route == AICHAT.route -> AICHAT
+            route == EDITPROFILE.route -> EDITPROFILE
+            route == EditPassword.route -> EditPassword
+            else -> null
+        }
     }
 }

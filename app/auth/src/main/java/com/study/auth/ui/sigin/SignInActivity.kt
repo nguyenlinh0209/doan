@@ -18,9 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignInActivity : BaseActivity<ActivtySignInOutLayoutBinding, SignUpViewModel>(
-    SignUpViewModel::class
-) {
+class SignInActivity :
+    BaseActivity<ActivtySignInOutLayoutBinding, SignUpViewModel>(SignUpViewModel::class) {
     @Inject
     lateinit var mainNavigator: MainNavigator
     override fun layoutId(): Int = R.layout.activty_sign_in_out_layout

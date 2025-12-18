@@ -136,5 +136,4 @@ dependencies {
     implementation(project(":data:user"))
     implementation(project(":data:common"))
     implementation(project(":config"))
-    implementation(project(":rteditor"))
 }

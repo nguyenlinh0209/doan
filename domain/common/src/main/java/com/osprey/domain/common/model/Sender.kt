@@ -1,4 +1,4 @@
-package com.starnest.domain.common.model
+package com.osprey.domain.common.model
 
 enum class Sender(val value: String) {
     SYSTEM("system"),

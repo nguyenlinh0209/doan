@@ -1,8 +1,11 @@
-package com.osprey.main.ui.main
+package com.study.main.ui.main
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.osprey.main.ui.main.MainUiAction
+import com.osprey.main.ui.main.MainUiEvent
+import com.osprey.main.ui.main.MainUiState
 import com.study.domain.user.usecase.GetCurrentUserEmail
 import com.study.main.ui.main.bottombar.BottomBarMenu
 import com.study.core.base.viewmodel.BaseUiStateViewModel

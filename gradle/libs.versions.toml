@@ -101,6 +101,7 @@ firebaseFirestoreKtx = "26.0.2"
 navigationComposeVersion = "2.9.6"
 androidxRoomKtx = "2.8.4"
 ui = "1.10.0"
+uiUnit = "1.10.0"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraLifecycle" }
@@ -230,6 +231,7 @@ foundation = { group = "androidx.compose.foundation", name = "foundation", versi
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-room-room-ktx2 = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoomKtx" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+androidx-compose-ui-unit = { group = "androidx.compose.ui", name = "ui-unit", version.ref = "uiUnit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

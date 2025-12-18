@@ -48,14 +48,23 @@ class ScreenFlashCardViewModel @Inject constructor(
                 if (categories.isEmpty()) {
                     createDefaultCategories()
                 } else {
-                    updateState { it.copy(categories = categories) }
+
+                    val defaultCategory = categories.find { it.name == "All" }
+                        ?: categories.firstOrNull()
+
+                    updateState {
+                        it.copy(
+                            categories = categories,
+                            selectedCategoryId = defaultCategory?.id
+                        )
+                    }
                 }
             }
         }
     }
 
     private suspend fun createDefaultCategories() {
-        val defaults = listOf("Work", "All")
+        val defaults = listOf("All", "Work")
 
         val categories = defaults.map { name ->
             CategoryFlashcard(name = name)
@@ -64,18 +73,21 @@ class ScreenFlashCardViewModel @Inject constructor(
         categories.forEach { category ->
             saveCategory(category)
         }
+
+        val savedCategories = getAllCategory()
+        val allCategory = savedCategories.find { it.name == "All" }
+
         updateState {
             it.copy(
-                categories = defaults.map { name ->
-                    CategoryFlashcard(name = name)
-                }
+                categories = savedCategories,
+                selectedCategoryId = allCategory?.id
             )
         }
     }
 
     private fun navigateAddFlashCard() {
         viewModelScope.launch(Dispatchers.Main) {
-            sendEvent(ScreenFlashCardUiEvent.NavigateTo(Screen.AddFlashCard))
+            sendEvent(ScreenFlashCardUiEvent.NavigateTo(Screen.FlashCard))
         }
     }
 
@@ -93,13 +105,17 @@ class ScreenFlashCardViewModel @Inject constructor(
             updateState {
                 it.copy(categories = categories)
             }
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 sendEvent(ScreenFlashCardUiEvent.CategoryCreated(categoryName))
             }
         }
     }
 
     private fun navigateToCategory(categoryId: UUID) {
+        updateState {
+            it.copy(selectedCategoryId = categoryId)
+        }
+
         viewModelScope.launch(Dispatchers.Main) {
             sendEvent(ScreenFlashCardUiEvent.NavigateToCategory(categoryId))
         }

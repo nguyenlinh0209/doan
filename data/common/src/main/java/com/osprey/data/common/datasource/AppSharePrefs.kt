@@ -14,4 +14,6 @@ interface AppSharePrefs: SharePrefs {
 
     fun clearAuthData()
 
+    var classStudy :Int
+
 }

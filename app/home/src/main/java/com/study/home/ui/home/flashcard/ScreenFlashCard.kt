@@ -86,6 +86,7 @@ fun ScreenFlashCard(
                     items(uiState.categories) { category ->
                         CategoryChip(
                             category = category,
+                            isSelected = uiState.selectedCategoryId == category.id, // So sánh với category đã chọn
                             onCategoryClick = { categoryId ->
                                 onAction(ScreenFlashCardUiAction.SelectCategory(categoryId))
                             }
@@ -181,29 +182,28 @@ private fun HeaderSection(
 @Composable
 private fun CategoryChip(
     category: CategoryFlashcard,
+    isSelected: Boolean,
     onCategoryClick: (UUID) -> Unit
 ) {
     Surface(
         modifier = Modifier
             .height(40.dp)
-            .clickable {
-                category.id.let { onCategoryClick(it) }
-            },
+            .clickable { category.id.let { onCategoryClick(it) } },
         shape = RoundedCornerShape(12.dp),
-        color = PrimaryGreen.copy(alpha = 0.1f),
+        color = if (isSelected) PrimaryGreen else PrimaryGreen.copy(alpha = 0.1f),
         border = BorderStroke(
             width = 1.dp,
-            color = PrimaryGreen.copy(alpha = 0.3f),
+            color = if (isSelected) PrimaryGreen else PrimaryGreen.copy(alpha = 0.3f),
         )
     ) {
         Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = category.name,
-                color = PrimaryGreen,
+                // Thay đổi màu text dựa vào isSelected
+                color = if (isSelected) Color.White else PrimaryGreen,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold
             )

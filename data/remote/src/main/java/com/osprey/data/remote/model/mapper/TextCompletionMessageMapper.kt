@@ -1,7 +1,7 @@
 package com.wodox.data.remote.model.mapper
 
 import com.starnest.data.base.AbstractDtoMapper
-import com.wodox.data.remote.model.model.request.TextCompletionMessageDto
+import com.osprey.data.remote.model.model.request.TextCompletionMessageDto
 import com.starnest.domain.remote.model.request.TextCompletionMessage
 
 class TextCompletionMessageMapper :

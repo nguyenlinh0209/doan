@@ -95,6 +95,7 @@ dependencies {
     implementation(libs.foundation)
     implementation(libs.androidx.room.room.ktx2)
     implementation(libs.androidx.ui)
+    implementation(libs.androidx.compose.ui.unit)
     kapt(libs.hilt.android.compiler)
     ksp(libs.androidx.hilt.compiler)
 
@@ -148,6 +149,7 @@ dependencies {
     implementation(project(":domain:user"))
     implementation(project(":data:home"))
     implementation(project(":config"))
+    implementation(project(":domain:common"))
     implementation(project(":app:core"))
     implementation("com.google.mlkit:text-recognition:16.0.0")
     // Camera

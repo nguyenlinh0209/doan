@@ -1,87 +1,79 @@
 package com.study.home.ui.home.profile
 
-import androidx.compose.material3.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.study.home.ui.home.HomeUiAction
-import com.study.home.ui.home.HomeUiState
 
 @Composable
 fun ProfileScreen(
     state: ProfileScreenUiState,
     onAction: (ProfileScreenUiAction) -> Unit
 ) {
+    val user = state.user
     var isDarkMode by remember { mutableStateOf(false) }
+
+    val backgroundColor = if (isDarkMode) Color(0xFF1A1A1A) else Color.White
+    val textColor = if (isDarkMode) Color.White else Color.Black
+    val cardColor = if (isDarkMode) Color(0xFF2D2D2D) else Color.White
+    val borderColor = if (isDarkMode) Color(0xFF404040) else Color(0xFFE0E0E0)
+    val secondaryTextColor = if (isDarkMode) Color(0xFFB0B0B0) else Color.Gray
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(backgroundColor)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 60.dp)
         ) {
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 Box(
                     modifier = Modifier
                         .size(80.dp)
-                        .background(Color(0xFF1BC77D), shape = CircleShape)
-                )
+                        .background(Color(0xFF1BC77D), shape = CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = user?.name?.take(2)?.uppercase() ?: "",
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    "Linh Nguyễn",
+                    text = user?.name.orEmpty(),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = textColor
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
                         modifier = Modifier
@@ -92,7 +84,7 @@ fun ProfileScreen(
                             .padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
                         Text(
-                            "Lớp 8",
+                            text = "Lớp ${user?.classStudy ?: "-"}",
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = Color(0xFFE74C3C)
@@ -102,9 +94,26 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        "jfhguhfuewf@gmail.com",
+                        text = user?.email.orEmpty(),
                         fontSize = 12.sp,
-                        color = Color.Gray
+                        color = secondaryTextColor
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Button(
+                    onClick = { onAction(ProfileScreenUiAction.EditProfile) },
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF4A90E2),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = "Chỉnh sửa hồ sơ",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
@@ -117,16 +126,13 @@ fun ProfileScreen(
                     .padding(horizontal = 16.dp)
                     .border(
                         width = 1.dp,
-                        color = Color(0xFFE0E0E0),
+                        color = borderColor,
                         shape = RoundedCornerShape(12.dp)
                     ),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+                colors = CardDefaults.cardColors(containerColor = cardColor)
             ) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                    modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
@@ -144,14 +150,14 @@ fun ProfileScreen(
                         Text(
                             "CHUỖI NGÀY HỌC",
                             fontSize = 11.sp,
-                            color = Color.Gray,
+                            color = secondaryTextColor,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
                             "12 ngày liên tục",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            color = textColor
                         )
                     }
                 }
@@ -159,10 +165,11 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // ===== SETTINGS =====
             Text(
                 "CÀI ĐẶT CHUNG",
                 fontSize = 12.sp,
-                color = Color.Gray,
+                color = secondaryTextColor,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
@@ -175,102 +182,79 @@ fun ProfileScreen(
                     .padding(horizontal = 16.dp)
                     .border(
                         width = 1.dp,
-                        color = Color(0xFFE0E0E0),
+                        color = borderColor,
                         shape = RoundedCornerShape(12.dp)
                     ),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+                colors = CardDefaults.cardColors(containerColor = cardColor)
             ) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                    modifier = Modifier.padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .background(Color(0xFFE8D5F2), shape = CircleShape),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text("🌙", fontSize = 20.sp)
-                    }
-
+                    Text("🌙", fontSize = 20.sp)
                     Spacer(modifier = Modifier.width(12.dp))
-
                     Text(
                         "Giao diện tối",
-                        fontSize = 14.sp,
+                        modifier = Modifier.weight(1f),
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
-                        modifier = Modifier.weight(1f)
+                        color = textColor
                     )
-
                     Switch(
                         checked = isDarkMode,
-                        onCheckedChange = { isDarkMode = it },
-                        modifier = Modifier.size(width = 50.dp, height = 28.dp),
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.Black,
-                            checkedTrackColor = Color.Black
-                        )
+                        onCheckedChange = { isDarkMode = it }
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
+            // ===== CHANGE PASSWORD =====
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .border(
                         width = 1.dp,
-                        color = Color(0xFFE0E0E0),
+                        color = borderColor,
                         shape = RoundedCornerShape(12.dp)
-                    ),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
+                    )
+                    .clickable { onAction(ProfileScreenUiAction.ChangePassword) },
+                colors = CardDefaults.cardColors(containerColor = cardColor)
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .background(Color(0xFFFFD4B2), shape = CircleShape),
-                        contentAlignment = Alignment.Center
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("🌐", fontSize = 20.sp)
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(Color(0xFFD4E5FF), shape = CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("🔒", fontSize = 20.sp)
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            "Đổi mật khẩu",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = textColor
+                        )
                     }
-
-                    Spacer(modifier = Modifier.width(12.dp))
-
-                    Text(
-                        "Đổi mật khẩu",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Text(
-                        ">",
-                        fontSize = 12.sp,
-                        color = Color.Gray
-                    )
+                    Text(">", fontSize = 20.sp, color = secondaryTextColor)
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = {
-                    onAction(ProfileScreenUiAction.SignOut)
-                },
+                onClick = { onAction(ProfileScreenUiAction.SignOut) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
@@ -278,16 +262,14 @@ fun ProfileScreen(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFE53935),
                     contentColor = Color.White
-                ),
-                contentPadding = PaddingValues(vertical = 14.dp)
+                )
             ) {
                 Text(
-                    text = "ĐĂNG XUẤT",
+                    "ĐĂNG XUẤT",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
             }
         }
-
-        }
+    }
 }

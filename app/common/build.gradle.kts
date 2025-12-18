@@ -141,7 +141,6 @@ dependencies {
     implementation(libs.firebase.config.ktx)
     implementation("org.jsoup:jsoup:1.18.1")
     // Project modules
-    implementation(project(":rteditor"))
     implementation(project(":app:resources"))
     implementation(project(":app:core"))
     implementation(project(":domain:remote"))

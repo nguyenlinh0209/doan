@@ -1,4 +1,4 @@
-package com.wodox.data.remote.model.model.request
+package com.osprey.data.remote.model.model.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

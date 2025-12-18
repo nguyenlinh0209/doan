@@ -38,7 +38,6 @@
             <option value="$PROJECT_DIR$/domain/main" />
             <option value="$PROJECT_DIR$/domain/remote" />
             <option value="$PROJECT_DIR$/domain/user" />
-            <option value="$PROJECT_DIR$/rteditor" />
           </set>
         </option>
       </GradleProjectSettings>

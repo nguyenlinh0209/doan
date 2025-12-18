@@ -146,7 +146,6 @@ dependencies {
     implementation(libs.eventbus)
 
     // Project modules
-    implementation(project(":rteditor"))
     implementation(project(":app:resources"))
     implementation(project(":domain:base"))
     implementation(project(":config"))

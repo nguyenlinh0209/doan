@@ -2,6 +2,7 @@ package com.wodox.data.remote.model.model.request
 
 import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
+import com.osprey.data.remote.model.model.request.TextCompletionMessageDto
 import kotlinx.serialization.Serializable
 
 

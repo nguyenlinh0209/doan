@@ -7,6 +7,7 @@ import com.study.core.base.viewmodel.BaseUiStateViewModel
 import com.study.domain.home.usecase.GenerateFlashCardParams
 import com.study.domain.home.usecase.GenerateFlashCardUseCase
 import com.study.domain.home.usecase.GetFlashCardByCategoryIDUseCase
+import com.study.domain.home.usecase.SaveFlashCardByCategoryIDUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class FlashCardViewModel @Inject constructor(
     app: Application,
     private val getFlashCardsUseCase: GetFlashCardByCategoryIDUseCase,
-    private val generateFlashCardUseCase: GenerateFlashCardUseCase
+    private val generateFlashCardUseCase: GenerateFlashCardUseCase,
+    private val saveFlashCardByCategoryIDUseCase: SaveFlashCardByCategoryIDUseCase,
 ) : BaseUiStateViewModel<FlashCardUiState, FlashCardUiEvent, FlashCardUiAction>(app) {
 
     override fun initialState(): FlashCardUiState = FlashCardUiState()
@@ -34,6 +36,8 @@ class FlashCardViewModel @Inject constructor(
                     input = action.input,
                     count = action.count
                 )
+
+            is FlashCardUiAction.SaveGeneratedFlashCards -> TODO()
         }
     }
 
@@ -43,7 +47,9 @@ class FlashCardViewModel @Inject constructor(
                 getFlashCardsUseCase(categoryId)
             }.onSuccess { flashCards ->
                 updateState {
-                    it.copy(flashCards = flashCards)
+                    it.copy(flashCards = flashCards,
+                        categoryFlashcardId = categoryId
+                        )
                 }
             }
         }

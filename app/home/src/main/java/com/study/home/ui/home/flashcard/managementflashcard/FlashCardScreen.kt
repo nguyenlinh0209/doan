@@ -39,6 +39,7 @@ fun FlashCardScreen(
     var selectedCardIndex by remember { mutableStateOf(0) }
     var showCreateBottomSheet by remember { mutableStateOf(false) }
     var showStudyMode by remember { mutableStateOf(false) }
+    var generatedCardIndex by remember { mutableStateOf(0) }
 
     val flashCards = listOf(
         FlashCard(
@@ -78,7 +79,23 @@ fun FlashCardScreen(
         )
     )
 
-    // Show study mode khi có selected card
+    // ⭐ FIX: Tự động close bottom sheet và chuyển study mode khi generate xong
+    LaunchedEffect(uiState.generatedFlashCard) {
+        if (uiState.generatedFlashCard.isNotEmpty() && !uiState.isGenerating) {
+            showCreateBottomSheet = false  // ⭐ Close bottom sheet
+            showStudyMode = true           // ⭐ Show study mode
+            generatedCardIndex = 0
+        }
+    }
+
+    // ⭐ FIX: Tự động close bottom sheet khi start generating
+    LaunchedEffect(uiState.isGenerating) {
+        if (uiState.isGenerating) {
+            showCreateBottomSheet = false
+        }
+    }
+
+    // Show study mode - từ selected card (danh sách flashcard)
     if (selectedCard != null && showStudyMode) {
         FlashCardStudyScreen(
             generatedCard = FlashCardDetailResponse(
@@ -93,9 +110,18 @@ fun FlashCardScreen(
                 selectedCard = null
             },
             onSave = {
+                val flashCardsToSave = uiState.generatedFlashCard.map { card ->
+                    FlashCard(
+                        id = UUID.randomUUID(),
+                        categoryId = uiState.categoryFlashcardId ?: UUID.randomUUID(),
+                        front = card.front,
+                        back = card.back,
+                        created_at = Date()
+                    )
+                }
+                onAction(FlashCardUiAction.SaveGeneratedFlashCards(flashCardsToSave))
                 showStudyMode = false
                 selectedCard = null
-                // Thêm card vào danh sách sau khi save
             },
             onPrevious = {
                 if (selectedCardIndex > 0) {
@@ -110,9 +136,9 @@ fun FlashCardScreen(
                 }
             }
         )
-    } else if (uiState.generatedFlashCard.isNotEmpty() && showStudyMode) {
-        var generatedCardIndex by remember { mutableStateOf(0) }
-
+    }
+    // Show study mode - từ generated cards (AI tạo ra)
+    else if (uiState.generatedFlashCard.isNotEmpty() && showStudyMode) {
         FlashCardStudyScreen(
             generatedCard = uiState.generatedFlashCard[generatedCardIndex],
             isGenerating = uiState.isGenerating,
@@ -120,10 +146,14 @@ fun FlashCardScreen(
             totalCards = uiState.generatedFlashCard.size,
             onClose = {
                 showStudyMode = false
+                generatedCardIndex = 0
             },
             onSave = {
-                showStudyMode = false
-                // Thêm card vào danh sách sau khi save
+                if (!uiState.isSaving) {
+                    showStudyMode = false
+                    generatedCardIndex = 0
+                }
+
             },
             onPrevious = {
                 if (generatedCardIndex > 0) {
@@ -136,7 +166,9 @@ fun FlashCardScreen(
                 }
             }
         )
-    } else {
+    }
+    // Main screen - danh sách flashcard
+    else {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -226,8 +258,43 @@ fun FlashCardScreen(
                     )
                 }
             }
+
+            // ⭐ Loading overlay khi generating
+            if (uiState.isGenerating) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(0.5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(24.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            color = Color(0xFF1BC77D),
+                            modifier = Modifier.size(60.dp),
+                            strokeWidth = 4.dp
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Text(
+                            "Đang tạo thẻ ghi nhớ...",
+                            fontSize = 16.sp,
+                            color = Color.White,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            "Vui lòng chờ",
+                            fontSize = 14.sp,
+                            color = Color.White.copy(0.7f)
+                        )
+                    }
+                }
+            }
         }
 
+        // ⭐ Bottom sheet tạo flashcard mới
         if (showCreateBottomSheet) {
             CreateFlashCardBottomSheet(
                 isGenerating = uiState.isGenerating,
@@ -240,10 +307,34 @@ fun FlashCardScreen(
                             count = count
                         )
                     )
-                    showCreateBottomSheet = false
-                    showStudyMode = true
                 }
             )
+        }
+        if (uiState.isSaving) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(0.5f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(24.dp)
+                ) {
+                    CircularProgressIndicator(
+                        color = Color(0xFF1BC77D),
+                        modifier = Modifier.size(60.dp),
+                        strokeWidth = 4.dp
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        "Đang lưu thẻ...",
+                        fontSize = 16.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
         }
     }
 }
@@ -482,6 +573,7 @@ fun FlashCardStudyScreen(
     generatedCard: FlashCardDetailResponse,
     isGenerating: Boolean,
     currentIndex: Int,
+    isSaving: Boolean = false,
     totalCards: Int,
     onClose: () -> Unit,
     onSave: () -> Unit,
@@ -490,7 +582,6 @@ fun FlashCardStudyScreen(
 ) {
     var isFlipped by remember { mutableStateOf(false) }
     var isMarked by remember { mutableStateOf(false) }
-    var swipeProgress by remember { mutableStateOf(0f) }
 
     // Reset flip state khi chuyển card
     LaunchedEffect(currentIndex) {
@@ -517,6 +608,7 @@ fun FlashCardStudyScreen(
             ) {
                 IconButton(
                     onClick = onClose,
+                    enabled = !isSaving,
                     modifier = Modifier
                         .size(40.dp)
                         .background(Color.White, shape = CircleShape)
@@ -539,6 +631,7 @@ fun FlashCardStudyScreen(
 
                 IconButton(
                     onClick = onSave,
+                    enabled = !isSaving,
                     modifier = Modifier
                         .size(40.dp)
                         .background(Color(0xFF1BC77D), shape = CircleShape)
@@ -581,7 +674,7 @@ fun FlashCardStudyScreen(
                 // Left Arrow
                 IconButton(
                     onClick = onPrevious,
-                    enabled = currentIndex > 0,
+                    enabled = currentIndex > 0 && !isGenerating && !isSaving,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 8.dp)
@@ -606,14 +699,14 @@ fun FlashCardStudyScreen(
                     back = generatedCard.back,
                     isFlipped = isFlipped,
                     isMarked = isMarked,
-                    onFlip = { isFlipped = !isFlipped },
-                    onMark = { isMarked = !isMarked }
+                    onFlip = { if (!isSaving) isFlipped = !isFlipped },
+                    onMark = { if (!isSaving) isMarked = !isMarked }
                 )
 
                 // Right Arrow
                 IconButton(
                     onClick = onNext,
-                    enabled = currentIndex < totalCards - 1,
+                    enabled = !isSaving,
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 8.dp)
@@ -675,7 +768,8 @@ fun FlashCardStudyScreen(
                 }
 
                 Button(
-                    onClick = { isFlipped = !isFlipped },
+                    onClick = { if (!isSaving) isFlipped = !isFlipped },
+                    enabled = !isSaving,
                     modifier = Modifier
                         .weight(1f)
                         .height(48.dp),

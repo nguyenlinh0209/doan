@@ -1,11 +1,14 @@
-package com.osprey.domain.user.di
+package com.study.domain.user.di
 
 import com.study.domain.user.repository.UserRepository
 import com.study.domain.user.usecase.GetCurrentUserEmail
+import com.study.domain.user.usecase.GetCurrentUserUseCase
 import com.study.domain.user.usecase.GetUserByEmailUseCase
 import com.study.domain.user.usecase.GetUserById
 import com.study.domain.user.usecase.LoginUseCase
 import com.study.domain.user.usecase.SignOutUseCase
+import com.study.domain.user.usecase.UpdatePasswordUseCase
+import com.study.domain.user.usecase.UpdateUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UserModule {
-
-
 
     @Provides
     @Singleton
@@ -33,6 +34,14 @@ object UserModule {
         userRepository: UserRepository,
     ): GetCurrentUserEmail {
         return GetCurrentUserEmail(userRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCurrentUserUseCase(
+        userRepository: UserRepository,
+    ): GetCurrentUserUseCase {
+        return GetCurrentUserUseCase(userRepository)
     }
 
     @Singleton
@@ -57,6 +66,22 @@ object UserModule {
         userRepository: UserRepository,
     ): LoginUseCase {
         return LoginUseCase(userRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUpdateUserUseCase(
+        userRepository: UserRepository,
+    ): UpdateUserUseCase {
+        return UpdateUserUseCase(userRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUpdatePasswordUseCase(
+        userRepository: UserRepository,
+    ): UpdatePasswordUseCase {
+        return UpdatePasswordUseCase(userRepository)
     }
 }
 

@@ -46,7 +46,6 @@ fun AIChatScreen(
                 .fillMaxSize()
                 .padding(bottom = 16.dp)
         ) {
-            // Header
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,7 +53,7 @@ fun AIChatScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = { },
+                    onClick = { onAction(AIChatUiAction.Close)},
                     modifier = Modifier.size(28.dp)
                 ) {
                     Icon(

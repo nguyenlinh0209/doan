@@ -431,7 +431,7 @@ private fun CreateFlashCardBottomSheet(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        "Số câu hỏi",
+                        "Số thẻ",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Black,

@@ -14,6 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 
 @Composable
 fun ProfileScreen(
@@ -28,6 +31,14 @@ fun ProfileScreen(
     val cardColor = if (isDarkMode) Color(0xFF2D2D2D) else Color.White
     val borderColor = if (isDarkMode) Color(0xFF404040) else Color(0xFFE0E0E0)
     val secondaryTextColor = if (isDarkMode) Color(0xFFB0B0B0) else Color.Gray
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            onAction(ProfileScreenUiAction.OnResume)
+        }
+    }
 
     Box(
         modifier = Modifier

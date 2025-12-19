@@ -4,10 +4,12 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.study.core.base.viewmodel.BaseUiStateViewModel
+import com.study.domain.home.model.local.FlashCard
 import com.study.domain.home.usecase.GenerateFlashCardParams
 import com.study.domain.home.usecase.GenerateFlashCardUseCase
 import com.study.domain.home.usecase.GetFlashCardByCategoryIDUseCase
 import com.study.domain.home.usecase.SaveFlashCardByCategoryIDUseCase
+import com.study.domain.home.usecase.SaveFlashCardParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,7 +39,7 @@ class FlashCardViewModel @Inject constructor(
                     count = action.count
                 )
 
-            is FlashCardUiAction.SaveGeneratedFlashCards -> TODO()
+            is FlashCardUiAction.SaveGeneratedFlashCards -> saveGeneratedFlashCards(action.flashCards)
         }
     }
 
@@ -47,10 +49,55 @@ class FlashCardViewModel @Inject constructor(
                 getFlashCardsUseCase(categoryId)
             }.onSuccess { flashCards ->
                 updateState {
-                    it.copy(flashCards = flashCards,
+                    it.copy(
+                        flashCards = flashCards,
                         categoryFlashcardId = categoryId
-                        )
+                    )
                 }
+            }
+        }
+    }
+
+    private fun saveGeneratedFlashCards(flashCards: List<FlashCard>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateState { it.copy(isSaving = true, error = null) }
+
+            val categoryId = currentState.categoryFlashcardId
+            if (categoryId == null) {
+                Log.e("FlashCardVM", "Category ID is null")
+                updateState {
+                    it.copy(
+                        isSaving = false,
+                        error = "Category ID is null"
+                    )
+                }
+                sendEvent(FlashCardUiEvent.SaveError("Category ID is null"))
+                return@launch
+            }
+
+            runCatching {
+                saveFlashCardByCategoryIDUseCase(SaveFlashCardParams(categoryId, flashCards))
+            }.onSuccess {
+                Log.d("FlashCardVM", "Flashcards saved successfully: ${flashCards.size}")
+
+                updateState {
+                    it.copy(
+                        isSaving = false,
+                        generatedFlashCard = emptyList(),
+                        flashCards = it.flashCards + flashCards
+                    )
+                }
+
+                sendEvent(FlashCardUiEvent.SaveSuccess)
+            }.onFailure { error ->
+                Log.e("FlashCardVM", "Error saving flashcards", error)
+                updateState {
+                    it.copy(
+                        isSaving = false,
+                        error = error.message ?: "Unknown error"
+                    )
+                }
+                sendEvent(FlashCardUiEvent.SaveError(error.message ?: "Unknown error"))
             }
         }
     }

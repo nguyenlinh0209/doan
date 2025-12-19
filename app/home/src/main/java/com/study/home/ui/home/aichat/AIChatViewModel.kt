@@ -8,6 +8,7 @@ import com.osprey.domain.common.model.Sender
 import com.study.common.extension.parseAIResponse
 import com.study.core.base.viewmodel.BaseUiStateViewModel
 import com.study.domain.home.usecase.AsKAIResponseUseCase
+import com.study.home.ui.home.flashcard.managementflashcard.FlashCardUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class AIChatViewModel @Inject constructor(
                 handleAskAI(action.message)
             }
             AIChatUiAction.Close -> {
-                // Handle close
+                navigateBack()
             }
         }
     }
@@ -110,6 +111,12 @@ class AIChatViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun navigateBack() {
+        viewModelScope.launch(Dispatchers.Main) {
+            sendEvent(AIChatUiEvent.NavigateBack)
         }
     }
 }

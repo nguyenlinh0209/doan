@@ -5,4 +5,5 @@ sealed class ProfileScreenUiAction {
 
     object EditProfile : ProfileScreenUiAction()
     object ChangePassword : ProfileScreenUiAction()
+    object OnResume : ProfileScreenUiAction()
 }

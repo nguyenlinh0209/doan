@@ -10,4 +10,5 @@ data class FlashCardUiState (
     val generatedFlashCard: List<FlashCardDetailResponse> = emptyList(),
     val categoryFlashcardId : UUID? = null,
     val isSaving: Boolean = false,
+    val error: String? = null
 )

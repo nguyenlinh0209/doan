@@ -8,7 +8,6 @@ import com.study.domain.user.usecase.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -30,6 +29,7 @@ class ProfileScreenViewModel @Inject constructor(
             ProfileScreenUiAction.SignOut -> handleSignOut()
             ProfileScreenUiAction.EditProfile -> navigateEdit()
             ProfileScreenUiAction.ChangePassword -> navigateChangePassword()
+            ProfileScreenUiAction.OnResume -> loadUser()
         }
     }
 
